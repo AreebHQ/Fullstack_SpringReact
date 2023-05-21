@@ -1,4 +1,4 @@
-name: CI
+
 
 on:
   pull_request:
@@ -34,3 +34,4 @@ jobs:
       - name: Maven Clean Package
         run: |
           ./mvnw --no-transfer-progress clean package -P build-frontend
+
