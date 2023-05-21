@@ -9,7 +9,7 @@ class SpringReactApplicationTests {
 
 	@Test
 	void contextLoads() {
-    Assertions.fail("==== test failed!");
+   // Assertions.fail("==== test failed!");
 	}
 
 }
