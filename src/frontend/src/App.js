@@ -215,6 +215,7 @@ function App() {
         ©2023 by Areeb
         <Divider>
           <a
+            rel="noopener norefferrer"
             target="_blank"
             href="https://github.com/AreebHQ">Click here to check my git repo</a>
         </Divider>
