@@ -1,7 +1,22 @@
 import './App.css';
 import {useState, useEffect} from "react";
 import {getAllStudents, deleteStudent} from "./client";
-import {Table, Breadcrumb, Layout, Menu, Spin, Empty, Button, Badge, Tag, Avatar, Popconfirm, Radio, Image} from 'antd';
+import {
+  Table,
+  Breadcrumb,
+  Layout,
+  Menu,
+  Spin,
+  Empty,
+  Button,
+  Badge,
+  Tag,
+  Avatar,
+  Popconfirm,
+  Radio,
+  Image,
+  Divider
+} from 'antd';
 import StudentDrawerForm from "./StudentDrawerForm";
 import {
   DesktopOutlined,
@@ -197,7 +212,15 @@ function App() {
       <Footer style={{ textAlign: 'center' }}>
       <Image width={75}
       src="https://github-production-user-asset-6210df.s3.amazonaws.com/69098189/238214032-6a0bb64c-1450-4e95-9992-591f22ff65f2.png"/>
-        ©2023 by Areeb</Footer>
+        ©2023 by Areeb
+        <Divider>
+          <a
+            rel="noopener norefferrer"
+            target="_blank"
+            href="https://github.com/AreebHQ">Click here to check my git repo</a>
+        </Divider>
+
+      </Footer>
     </Layout>
   </Layout>
 }
