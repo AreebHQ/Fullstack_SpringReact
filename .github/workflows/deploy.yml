@@ -53,7 +53,8 @@ jobs:
 
       - name: Build Number
         id: build-number
-        run: echo "BUILD_NUMBER=$(date '+%-d.%-m.%Y.%-H.%-M.%-S')" >> $GITHUB_OUTPUT
+        run: echo "BUILD_NUMBER=$(date '+%-d.%-m.%Y.%-H.%-M.%-S')" >> $GITHUB_ENV
+
 
       - name: Docker Login
         uses: docker/login-action@f3364599c6aa293cdc2b8391b1b56d0c30e45c8a
@@ -69,7 +70,7 @@ jobs:
           ./mvnw --no-transfer-progress clean package \
             -P build-frontend \
             -P jib-push-to-dockerhub \
-              -Dapp.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}}
+              -Dapp.image.tag=${{ env.BUILD_NUMBER }}
       - uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
@@ -79,7 +80,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Update and commit app version in docker-compose.yml
         run: |
-          BUILD_NUMBER=${{steps.build-number.outputs.BUILD_NUMBER}}
+          BUILD_NUMBER=${{ env.BUILD_NUMBER }}
           echo -e "Current elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
           sed -i -E 's_(areeb110/springboot-react-fullstack:)([^"]*)_\1'${BUILD_NUMBER}'_' elasticbeanstalk/docker-compose.yml
           echo -e "Current elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
@@ -105,8 +106,8 @@ jobs:
           environment_name: ${{ env.EB_ENVIRONMENT_NAME }}
           application_name: ${{ env.EB_APPLICATION_NAME }}
           deployment_package: ${{ env.EB_DEPLOYMENT_PACKAGE }}
-          version_label: ${{ steps.build-number.outputs.BUILD_NUMBER }}
-          version_description: Version ${{steps.build-number.outputs.BUILD_NUMBER}} deployed via github actions ${{ github.sha }}
+          version_label: ${{ env.BUILD_NUMBER }}
+          version_description: Version ${{ env.BUILD_NUMBER }} deployed via github actions ${{ github.sha }}
           wait_for_deployment: 60
       - uses: 8398a7/action-slack@v3
         with:
