@@ -66,11 +66,10 @@ jobs:
 
       - name: Maven Clean Package and Push to Dockerhub
         run: |
-          BUILD_NUMBER=${{ env.BUILD_NUMBER }}
           ./mvnw --no-transfer-progress clean package \
             -P build-frontend \
             -P jib-push-to-dockerhub \
-              -Dapp.image.tag=${BUILD_NUMBER}
+              -Dapp.image.tag=${{ env.BUILD_NUMBER }}
       - uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
