@@ -69,6 +69,7 @@ jobs:
           BUILD_NUMBER=${{ env.BUILD_NUMBER }}
           echo "pushing -Dapp.image.tag=${{ env.BUILD_NUMBER }}"
           ./mvnw clean package -P build-frontend -P jib-push-to-dockerhub -Dapp.image.tag=${{ env.BUILD_NUMBER }}
+          docker push areeb110/springboot-react-fullstack:${{ env.BUILD_NUMBER }}
           docker images
 
       - uses: 8398a7/action-slack@v3
