@@ -66,15 +66,14 @@ jobs:
 
       - name: Maven Clean Package and Push to Dockerhub
         run: |
-          ./mvnw --no-transfer-progress clean package \
-            -P build-frontend \
-            -P jib-push-to-dockerhub \
-              -Dapp.image.tag=${{ env.BUILD_NUMBER }}
+          BUILD_NUMBER=${{ env.BUILD_NUMBER }}
+          ./mvnw clean package -P build-frontend -P jib-push-to-dockerhub -Dapp.image.tag=${BUILD_NUMBER}
+
       - uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-          text: ':white_check_mark: pushed areeb110/springboot-react-fullstack:${{steps.build-number.outputs.BUILD_NUMBER}} to docker hub... https://hub.docker.com/repository/docker/areeb110/springboot-react-fullstack'
+          text: ':white_check_mark: pushed areeb110/springboot-react-fullstack:${{ env.BUILD_NUMBER }} to docker hub... https://hub.docker.com/repository/docker/areeb110/springboot-react-fullstack'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Update and commit app version in docker-compose.yml
