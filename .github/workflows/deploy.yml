@@ -68,6 +68,7 @@ jobs:
         run: |
           BUILD_NUMBER=${{ env.BUILD_NUMBER }}
           ./mvnw clean package -P build-frontend -P jib-push-to-dockerhub -Dapp.image.tag=${BUILD_NUMBER}
+
       - uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
